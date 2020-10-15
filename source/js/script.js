@@ -1,66 +1,74 @@
 window.addEventListener('load', () => {
+        let amountTask;
         let restoreContent = JSON.parse(localStorage.getItem('saveContent'));
         let restorePushElem = JSON.parse(localStorage.getItem('savePushElem'));
-        let amountTask = restoreContent.length;
+        if (restoreContent !== null) {
+            amountTask = restoreContent.length;
+        } else {
+            amountTask = 0;
+        }
+
         let contentToDo = [];
         let addNewTask = false;
 
+
         let addRestoreContent = function () {
-            for (let i = 0; i < restoreContent.length; i++) {
-                contentToDo[i] = restoreContent[i];
-                let li = document.createElement("li");
-                li.id = "li" + i;
-                li.className = "count";
-                let divView = document.createElement("div");
-                divView.className = "view";
-                let inputToggle = document.createElement("input");
-                inputToggle.className = "toggle";
-                inputToggle.type = "checkbox";
-                inputToggle.id = "checkBox" + i;
-                if(restorePushElem[i] === true){
-                    inputToggle.checked = "true";
+            if (restoreContent !== null) {
+                for (let i = 0; i < restoreContent.length; i++) {
+                    contentToDo[i] = restoreContent[i];
+                    let li = document.createElement("li");
+                    li.id = "li" + i;
+                    li.className = "count";
+                    let divView = document.createElement("div");
+                    divView.className = "view";
+                    let inputToggle = document.createElement("input");
+                    inputToggle.className = "toggle";
+                    inputToggle.type = "checkbox";
+                    inputToggle.id = "checkBox" + i;
+                    if (restorePushElem[i] === true) {
+                        inputToggle.checked = "true";
+                    }
+                    let labelToDo = document.createElement("label");
+                    labelToDo.id = "label" + i;
+                    let txt = restoreContent[i];
+                    contentToDo[i] = txt;
+                    let span = document.createElement('span');
+                    span.id = "span" + i;
+                    span.className = "itemSpan";
+                    span.innerText = txt;
+                    labelToDo.append(span);
+                    let buttonDestroy = document.createElement("button");
+                    buttonDestroy.className = "destroy";
+                    buttonDestroy.id = "button" + i;
+                    divView.append(inputToggle, labelToDo, buttonDestroy);
+                    let inputEdit = document.createElement("input");
+                    inputEdit.className = "edit";
+                    inputEdit.value = txt;
+                    li.append(divView, inputEdit);
+                    let ul = document.querySelector('[class="todo-list"]');
+                    ul.append(li);
                 }
-                let labelToDo = document.createElement("label");
-                labelToDo.id = "label" + i;
-                let txt = restoreContent[i];
-                contentToDo[i] = txt;
-                let span = document.createElement('span');
-                span.id = "span" + i;
-                span.className = "itemSpan";
-                span.innerText = txt;
-                labelToDo.append(span);
-                let buttonDestroy = document.createElement("button");
-                buttonDestroy.className = "destroy";
-                buttonDestroy.id = "button" + i;
-                divView.append(inputToggle, labelToDo, buttonDestroy);
-                let inputEdit = document.createElement("input");
-                inputEdit.className = "edit";
-                inputEdit.value = txt;
-                li.append(divView, inputEdit);
-                let ul = document.querySelector('[class="todo-list"]');
-                ul.append(li);
-            }
-            if (restoreContent.length > 0) {
-                if (restoreContent.length > 1) {
-                    let item = document.querySelector('[class="todo-count"]').childNodes[2];
-                    item.innerText = "";
-                    item.innerText = "items";
-                }
-                if (restoreContent.length < 2) {
-                    let item = document.querySelector('[class="todo-count"]').childNodes[2];
-                    item.innerText = "";
-                    item.innerText = "item";
-                }
-                let footer = document.querySelector('[class="footer"]')
-                footer.style.display = "block";
+                if (restoreContent.length > 0) {
+                    if (restoreContent.length > 1) {
+                        let item = document.querySelector('[class="todo-count"]').childNodes[2];
+                        item.innerText = "";
+                        item.innerText = "items";
+                    }
+                    if (restoreContent.length < 2) {
+                        let item = document.querySelector('[class="todo-count"]').childNodes[2];
+                        item.innerText = "";
+                        item.innerText = "item";
+                    }
+                    let footer = document.querySelector('[class="footer"]')
+                    footer.style.display = "block";
 
-                let numbers = document.querySelector("strong");
-                numbers.innerText = "";
-                numbers.innerText = (restoreContent.length);
+                    let numbers = document.querySelector("strong");
+                    numbers.innerText = "";
+                    numbers.innerText = (restoreContent.length);
 
+                }
             }
         }
-
         addRestoreContent();
 
 
